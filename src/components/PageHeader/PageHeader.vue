@@ -81,7 +81,7 @@ const showTabList = tabList.value.filter((item) => {
     }
 
 .tab-title{
-    font-size: 24px;
+    font-size: 1.56rem;
     font-weight: bold;
     font-family: "HuangLong", sans-serif;;
     font-style: oblique;
@@ -96,10 +96,10 @@ const showTabList = tabList.value.filter((item) => {
             width: auto;
             height: 40px;
             line-height: 40px;
-            padding: 0 20px;
+            padding: 0 1.3rem;
             cursor: pointer;
             color: black;
-            font-size: 20px;
+            font-size: 1.3rem;
             font-family: "HuangLong", sans-serif;
             font-weight: bold;
 

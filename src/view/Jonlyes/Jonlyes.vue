@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { ref } from 'vue'
 import { carouselList, introduceInfo } from './config'
 
 
@@ -8,10 +7,10 @@ import { carouselList, introduceInfo } from './config'
   <div class="home">
     <!-- 轮播图 -->
     <div class="carousel">
-      <el-carousel :interval="3000" type="card" height="480px">
+      <el-carousel :interval="20000" type="card" height="30rem">
         <el-carousel-item v-for="(item, index) in carouselList" :key="index">
           <div class="carousel-item">
-            <el-image :src="item.img" fit="contain" />
+            <el-image :src="item.img" fit="cover" />
             <div class="title">
               <span>{{ item.title }}</span>
             </div>
@@ -43,22 +42,33 @@ import { carouselList, introduceInfo } from './config'
   .carousel {
     padding: 0 20px;
 
+    .el-carousel__mask {
+      background-color: white !important;
+      opacity: 1 !important;
+      ;
+    }
+
     .carousel-item {
       width: auto;
+      height: 100%;
       background-color: none;
       overflow: hidden;
       position: relative;
+
+      .el-image {
+        width: 100%;
+        height: 100%;
+      }
 
       .title {
         width: 100%;
         height: 100%;
         display: flex;
         justify-content: center;
-        // align-items: center;
         position: absolute;
         top: 0;
         z-index: 9;
-        font-size: 20px;
+        font-size: 1.3rem;
         font-weight: 800;
         color: white;
         font-family: "HuangLong", sans-serif;
@@ -91,7 +101,7 @@ import { carouselList, introduceInfo } from './config'
         justify-content: center;
         text-align: center;
         font-family: "HuangLong", sans-serif;
-        font-size: 24px;
+        font-size: 1.56rem;
         font-weight: 200;
         font-style: oblique;
       }
@@ -100,6 +110,7 @@ import { carouselList, introduceInfo } from './config'
         margin: 10px 0;
         line-height: 28px;
         font-style: italic;
+        font-size: 1.04rem;
       }
     }
   }

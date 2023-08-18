@@ -51,16 +51,17 @@ const connectionToHandle = (url: string) => {
     box-sizing: border-box;
     color: black;
     padding: 0 20px;
-    font-size: 14px;
+    font-size: 0.91rem;
     font-weight: 400;
     font-family: "HuangLong", sans-serif;
 
     .connection {
         display: flex;
+
         img {
             margin: 0 20px;
-            width: 24px;
-            height: 24px;
+            width: 1.56rem;
+            height: 1.56rem;
             border-radius: 50%;
             cursor: pointer;
 

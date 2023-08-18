@@ -26,7 +26,8 @@ watch(() => route.name, (val) => {
 // 滚动事件
 const scrollHandle = (event: ScrollEvent) => {
   if (route.name === 'jonlyes') {
-    isShow.value = event.scrollTop > 200 ? false : true
+    // 边界判断 滚动200px或者页面高度大于700直接false
+    isShow.value = (event.scrollTop > 200 && document.documentElement.clientHeight < 700) ? false : true
   }
 }
 
@@ -39,29 +40,31 @@ const scrollToHandle = () => {
 </script>
 <template>
   <div class="layout">
-    <el-scrollbar ref="scrollbarRef" height="100vh" @scroll="scrollHandle">
-      <el-container>
-        <el-header height="100px" v-if="isNotFound">
-          <PageHeader />
-        </el-header>
-        <el-main>
-          <router-view v-slot="{ Component }">
-            <Transition name="blog">
-              <keep-alive include="blog">
-                <component :is='Component' />
-              </keep-alive>
-            </Transition>
-          </router-view>
-        </el-main>
-        <el-footer v-if="isNotFound">
-          <PageFooter />
-        </el-footer>
-        <div class="scroll-down" v-if="isShow">
-          <el-icon>
-            <ArrowDown @click="scrollToHandle" />
-          </el-icon>
-        </div>
-      </el-container>
+    <el-scrollbar ref="scrollbarRef" height="100vh" @scroll="scrollHandle" :always="true">
+      <div class="page">
+        <el-container>
+          <el-header height="100px" v-if="isNotFound">
+            <PageHeader />
+          </el-header>
+          <el-main>
+            <router-view v-slot="{ Component }">
+              <Transition name="blog">
+                <keep-alive include="blog">
+                  <component :is='Component' />
+                </keep-alive>
+              </Transition>
+            </router-view>
+          </el-main>
+          <el-footer v-if="isNotFound">
+            <PageFooter />
+          </el-footer>
+          <div class="scroll-down" v-if="isShow">
+            <el-icon>
+              <ArrowDown @click="scrollToHandle" />
+            </el-icon>
+          </div>
+        </el-container>
+      </div>
     </el-scrollbar>
   </div>
 </template>
@@ -69,14 +72,26 @@ const scrollToHandle = () => {
 
 <style lang="scss" scoped>
 .layout {
-  width: 100%;
-  height: 100%;
   background-color: rgb(222, 229, 231);
+
+  :deep(.el-scrollbar__bar) {
+    z-index: 999 !important;
+
+    div {
+      opacity: .8;
+    }
+  }
+
+  .page {
+    width: 100vw;
+    min-width: 1000px;
+  }
 
   .el-main {
     overflow: hidden;
   }
-  .el-footer{
+
+  .el-footer {
     margin-top: 60px;
   }
 
@@ -88,7 +103,7 @@ const scrollToHandle = () => {
     align-items: center;
     position: fixed;
     bottom: 0px;
-    z-index: 99;
+    z-index: 19;
 
     .el-icon {
       color: black;

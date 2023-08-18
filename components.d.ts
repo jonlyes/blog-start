@@ -7,9 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Alstral: typeof import('./src/components/Astral/Alstral.vue')['default']
     Astral: typeof import('./src/components/Astral/Astral.vue')['default']
-    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
     ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
@@ -18,10 +16,7 @@ declare module 'vue' {
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']
-    ElLink: typeof import('element-plus/es')['ElLink']
     ElMain: typeof import('element-plus/es')['ElMain']
-    ElProgress: typeof import('element-plus/es')['ElProgress']
-    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     PageFooter: typeof import('./src/components/PageFooter/PageFooter.vue')['default']
     PageHeader: typeof import('./src/components/PageHeader/PageHeader.vue')['default']
