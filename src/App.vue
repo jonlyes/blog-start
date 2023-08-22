@@ -4,9 +4,11 @@ import { useRoute } from 'vue-router'
 import { ElScrollbar } from 'element-plus'
 import PageHeader from '@/components/PageHeader/PageHeader.vue'
 import PageFooter from '@/components/PageFooter/PageFooter.vue'
+import RemHandle from '@/utils/RemHandle'
 import { ScrollEvent } from './type'
 
 const route = useRoute()
+const remHandle = RemHandle.getInstance()
 
 // 404页面
 const isNotFound = shallowRef<boolean>(false)
@@ -14,27 +16,58 @@ const isNotFound = shallowRef<boolean>(false)
 // 导航箭头
 const isShow = shallowRef<boolean>(false)
 
-// scrollbarRef
+// 箭头锁(大于800直接不显示箭头并锁住不允许被操作)
+const arrowLock = shallowRef<boolean>(true)
+
+// 滚动条实例
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 
 // 监视路由name
 watch(() => route.name, (val) => {
+
   isNotFound.value = val !== 'NotFound'
-  isShow.value = val === 'jonlyes'
+
+  if (val === 'jonlyes') {
+    remHandle.addRemFn(resizeHandleFn, true)
+  } else {
+    setTimeout(() => {
+      remHandle.removeRemFn(resizeHandleFn)
+    }, 0);
+    isShow.value = false
+    arrowLock.value= false
+  }
+
 }, { immediate: true })
 
-// 滚动事件
-const scrollHandle = (event: ScrollEvent) => {
-  if (route.name === 'jonlyes') {
-    // 边界判断 滚动200px或者页面高度大于700直接false
-    isShow.value = (event.scrollTop > 200 && document.documentElement.clientHeight < 700) ? false : true
+
+// remHandle的回调
+const resizeHandleFn = (document: HTMLElement) => {
+  if (document.clientHeight > 800) {
+    isShow.value = false
+    arrowLock.value = false
+  } else {
+    isShow.value = true
+    arrowLock.value = true
   }
 }
 
-// setScrollTo
+
+// 滚动事件
+const scrollHandle = (event: ScrollEvent) => {
+  if (route.name !== 'jonlyes') return
+  if (!arrowLock.value) {
+    isShow.value = false
+  } else {
+    isShow.value = event.scrollTop > 200 ? false : true
+  }
+
+}
+
+// 设置滚动距离
 const scrollToHandle = () => {
   scrollbarRef.value?.setScrollTop(600)
 }
+
 
 
 </script>

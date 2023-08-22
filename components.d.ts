@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ArticleGrid: typeof import('./src/components/Article/ArticleGrid.vue')['default']
     Astral: typeof import('./src/components/Astral/Astral.vue')['default']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']

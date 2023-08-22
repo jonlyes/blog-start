@@ -13,7 +13,8 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 
-new RemHandle(1000)
+RemHandle.getInstance(1000);
 
 app.use(router);
 app.mount("#app");
+
