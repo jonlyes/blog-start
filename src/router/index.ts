@@ -11,6 +11,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/view/Article/Article.vue"),
   },
   {
+    path: "/article/:id",
+    component: () => import("@/view/Article/ArticleDetail.vue"),
+  },
+
+  {
     path: "/project",
     component: () => import("@/view/Project/Project.vue"),
   },
@@ -19,8 +24,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/view/Admin/Admin.vue"),
   },
   {
-    path: "/mirror",
-    component: () => import("@/view/Mirror/Mirror.vue"),
+    path: "/moment",
+    component: () => import("@/view/Moment/Moment.vue"),
   },
   {
     path: "/404",
@@ -33,25 +38,6 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   routes,
   history: createWebHistory(import.meta.env.BASE_URL),
-});
-
-router.beforeEach((to, from) => {
-  // token值
-  // const token = getToken();
-  // // 判断是否登录
-  // if (!token) {
-  //   if (to.path !== "/login" && to.path !== "/reg" && to.path !== "/retrievepass") {
-  //     success("请先登录");
-  //     return { path: "/login" };
-  //   }
-  // }
-  // //防止重复登录
-  // if (token && to.path == "/login") {
-  //   if (from.path == "/login") {
-  //     return { path: "/" };
-  //   }
-  //   return { path: from.path !== "/login" ? from.path : "/" };
-  // }
 });
 
 //暴露挂载

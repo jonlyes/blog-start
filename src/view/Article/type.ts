@@ -2,7 +2,19 @@ interface ArticleListItem {
   id: number;
   title: string;
   cover: string;
-  createAt: Date;
+  createAt: string;
+  updateAt: string;
 }
 
-export type { ArticleListItem };
+interface ArticleDetail {
+  id: number;
+  title: string;
+  cover: string;
+  content: string;
+  createAt: string;
+  updateAt: string;
+  type: "public" | "private";
+  imgList: string[];
+}
+
+export type { ArticleListItem ,ArticleDetail};

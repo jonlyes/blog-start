@@ -4,7 +4,9 @@ import { GetArticleListParams, GetArticleInfoRes } from "./type";
 
 export const getArticleList = (params: GetArticleListParams) => {
   return request.get<
-    ResData<Omit<Omit<GetArticleInfoRes, "content">, "imgList">[]>
+    ResData<Omit<Omit<GetArticleInfoRes, "content">, "imgList">[]> & {
+      counts: number;
+    }
   >({
     url: "/article",
     params,
@@ -12,7 +14,7 @@ export const getArticleList = (params: GetArticleListParams) => {
   });
 };
 
-export const getArticleDetails = (articleId: number) => {
+export const getArticleDetail = (articleId: number) => {
   return request.get<ResData<GetArticleInfoRes>>({
     url: `/article/${articleId}`,
     showLoading: true,

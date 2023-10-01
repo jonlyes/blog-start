@@ -11,10 +11,10 @@ class RemHandle {
   }
 
   public static getInstance(minWidth: number = 0): RemHandle {
-    if (!RemHandle.instance) {
-      RemHandle.instance = new RemHandle(minWidth);
+    if (!this.instance) {
+      this.instance = new RemHandle(minWidth);
     }
-    return RemHandle.instance;
+    return this.instance;
   }
 
   // 添加回调(回调会在setResize里执行)

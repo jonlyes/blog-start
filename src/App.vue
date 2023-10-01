@@ -106,6 +106,12 @@ const scrollToHandle = () => {
 <style lang="scss" scoped>
 .layout {
   background-color: rgb(222, 229, 231);
+  // width: 100%;
+  // height: 100%; /* 或者设置一个具体的高度 */
+  // background-image: url('./assets/背景2.jpg');
+  // background-repeat: repeat-y;
+  // background-size:cover ;
+
 
   :deep(.el-scrollbar__bar) {
     z-index: 999 !important;
@@ -118,6 +124,10 @@ const scrollToHandle = () => {
   .page {
     width: 100vw;
     min-width: 1000px;
+  }
+  .el-header{
+    // background-color: rgba(255,255,255,.7);
+    // margin-bottom: 40px;
   }
 
   .el-main {

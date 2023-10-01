@@ -23,10 +23,11 @@
     // alias
     "paths": {
       "@*":["./src*"],
-      "@/api*":["./src/api*"],
+      "@/service*":["./src/service*"],
+      "@/global*":["./src/global*"],
       "@/assets*":["./src/assets*"],
       "@/components*":["./src/components*"],
-      "@/hook*":["./src/hooks*"],
+      "@/hook*":["./src/hook*"],
       "@/router*":["./src/router*"],
       "@/store*":["./src/store*"],
       "@/type*":["./src/types*"],

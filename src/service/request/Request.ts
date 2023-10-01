@@ -1,5 +1,9 @@
 // ts封装axios load + msg
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import axios, {
+  AxiosInstance,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 import { ElMessage, ElLoading } from "element-plus";
 import { RequestAxiosConfig, RequestInterceptors } from "./type";
 
@@ -47,16 +51,21 @@ class Request {
     );
 
     this.instance.interceptors.response.use(
-      (res) => {
-        this.loadingInstance?.close();
-        if (this.showMsg && !res.data.code) {
-          ElMessage.success(res.data.msg);
-        }
+      (res: any) => {
+        setTimeout(() => {
+          this.loadingInstance?.close();
+
+          if (this.showMsg && !res.code) {
+            ElMessage.success(res.message);
+          }
+        }, 300);
         return res;
       },
       (error: Error) => {
-        this.loadingInstance?.close();
-        ElMessage.error(error);
+        setTimeout(() => {
+          this.loadingInstance?.close();
+          ElMessage.error(error);
+        }, 500);
         return error;
       }
     );
@@ -71,6 +80,10 @@ class Request {
       // 是否有开启load
       if (typeof config.showLoading === "boolean") {
         this.showLoading = config.showLoading;
+      }
+      // 是否开启msg
+      if (typeof config.showMsg === "boolean") {
+        this.showMsg = config.showMsg;
       }
       this.instance
         ?.request<any, T>(config)
@@ -90,16 +103,16 @@ class Request {
   }
 
   get<T = any>(config: RequestAxiosConfig<T>): Promise<T> {
-    return this.request({ ...config, method: "GET" });
+    return this.request<T>({ ...config, method: "GET" });
   }
   post<T = any>(config: RequestAxiosConfig<T>): Promise<T> {
-    return this.request({ ...config, method: "POST" });
+    return this.request<T>({ ...config, method: "POST" });
   }
   delete<T = any>(config: RequestAxiosConfig<T>): Promise<T> {
-    return this.request({ ...config, method: "DELETE" });
+    return this.request<T>({ ...config, method: "DELETE" });
   }
   put<T = any>(config: RequestAxiosConfig<T>): Promise<T> {
-    return this.request({ ...config, method: "PUT" });
+    return this.request<T>({ ...config, method: "PUT" });
   }
 }
 

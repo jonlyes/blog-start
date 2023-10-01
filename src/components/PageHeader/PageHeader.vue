@@ -1,53 +1,65 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, shallowRef, computed } from 'vue'
 import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
+import { storeToRefs } from 'pinia'
 import { TabItem } from './type';
 import avatar from '@/assets/avatar.jpg'
+import { useAuthStore } from '@/store/useAuthStore';
+import Login from '@/components/Login/Login.vue'
 
 const route: RouteLocationNormalizedLoaded = useRoute()
+
+const authStore = useAuthStore()
+const { isLogin } = storeToRefs(authStore)
 
 const tabList = ref<TabItem[]>(
     [{
         label: 'Jonlyes',
         path: '/',
-        isShow: ref<boolean>(true)
+        isShow: shallowRef<boolean>(true)
     }, {
         label: 'Article',
         path: '/article',
-        isShow: ref<boolean>(true)
+        isShow: shallowRef<boolean>(true)
     }, {
         label: 'Project',
         path: '/project',
-        isShow: ref<boolean>(true)
+        isShow: shallowRef<boolean>(true)
     },
     {
-        label: 'Mirror',
-        path: '/mirror',
-        isShow: ref<boolean>(true)
+        label: 'Moment',
+        path: '/moment',
+        isShow: shallowRef<boolean>(true)
     },
     {
         label: 'Admin',
-        path: '/project',
-        isShow: ref<boolean>(false)
+        path: '/admin',
+        isShow: isLogin
     }
     ])
 
-const showTabList = tabList.value.filter((item) => {
-    return item.isShow
+const showTabList = computed(() => {
+    return tabList.value.filter((item) => {
+        return item.isShow
+    })
 })
+
 
 </script>
 <template>
     <div class="tab-box">
         <div class="tab-left">
-            <img :src="avatar">
+            <Login>
+                <img :src="avatar">
+            </Login>
         </div>
         <div class="tab-title">
             <span>jonleyes' personal blog</span>
         </div>
         <div class="tab-right">
-            <div class="tab-item" v-for="(item, index) in  showTabList " :key="index"
-                :class="{ active: route.path === item.path }" @click="$router.push(item.path)">
+            <div class="tab-item" v-for="(item, index) in  showTabList " :key="index" :class="{
+                active: item.path === '/' ? route.path === item.path : route.path.includes(item.path)
+            }" @click="$router.push(item.path)">
                 {{ item.label }}
             </div>
         </div>
@@ -64,7 +76,7 @@ const showTabList = tabList.value.filter((item) => {
     align-items: center;
     padding: 0 40px;
     box-sizing: border-box;
-    border-bottom: .3px solid rgba(66, 66, 66, .3);
+    border-bottom: 1px solid rgba(66, 66, 66,);
 
     .tab-left {
         width: 80px;
@@ -77,16 +89,20 @@ const showTabList = tabList.value.filter((item) => {
             height: 40px;
             border-radius: 50%;
             background-color: none;
+            cursor: pointer;
         }
     }
 
-.tab-title{
-    font-size: 1.56rem;
-    font-weight: bold;
-    font-family: "HuangLong", sans-serif;;
-    font-style: oblique;
-    opacity: .8;
-}
+    .tab-title {
+        color: black;
+        font-size: 1.56rem;
+        font-weight: bold;
+        font-family: "HuangLong", sans-serif;
+        ;
+        font-style: oblique;
+        opacity: .8;
+    }
+
     .tab-right {
         width: auto;
         display: flex;

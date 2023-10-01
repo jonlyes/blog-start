@@ -1,22 +1,28 @@
-import { AxiosResponse } from "axios";
 import Request from "./request/Request";
 import { baseURL } from "./request/config";
-import { RequestAxiosConfig } from "./request/type";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default new Request({
   baseURL,
   timeout: 3000,
   interceptors: {
-    requestInterceptor: (config: RequestAxiosConfig) => {
+    requestInterceptor: (config) => {
+      const authStore = useAuthStore();
+
+      if (authStore.authToken !== "" && config.headers) {
+        config.headers["Authorization"] = `Bearer ${authStore.authToken}`;
+        config.headers["Content-Type"] = "application/json";
+      }
+
       return config;
     },
-    requestInterceptorCatch: (error: Error) => {
+    requestInterceptorCatch: (error) => {
       return error;
     },
-    responseInterceptor: (response: AxiosResponse) => {
+    responseInterceptor: (response) => {
       return response.data;
     },
-    responseInterceptorCatch: (error: Error) => {
+    responseInterceptorCatch: (error) => {
       return error;
     },
   },
