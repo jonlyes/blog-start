@@ -13,8 +13,6 @@ const { listData, isDisabled, load, listCounts } = useListData<Omit<Omit<GetArti
   return result
 })
 
-
-
 </script>
 <template>
   <div class="article">

@@ -19,7 +19,7 @@ const JDayjs = (timestamp: string | number) => {
       time = hours + "小时前";
       break;
     case days < 3:
-      time = days + "天前";
+      time = days + 1 + "天前";
       break;
     default:
       time = dayjs(timestamp).format("YYYY-MM-DD HH:mm");

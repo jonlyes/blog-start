@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import useMomentList from '@/hook/useMomentList'
 import JDayjs from '@/utils/JDayjs'
 import Finish from '@/components/Finish/Finish.vue'
+import SendMoment from '@/components/Moment/SendMoment.vue'
 
-const { listData, isDisabled, load ,listCounts} = useMomentList()
+const { listData, isDisabled, load, listCounts } = useMomentList()
+
+const isShow = ref<boolean>(false)
 
 </script>
 <template>
@@ -31,6 +35,7 @@ const { listData, isDisabled, load ,listCounts} = useMomentList()
       </el-timeline>
     </main>
     <Finish v-if="listData.length >= listCounts"></Finish>
+    <SendMoment v-model="isShow"></SendMoment>
   </div>
 </template>
 
@@ -43,6 +48,7 @@ const { listData, isDisabled, load ,listCounts} = useMomentList()
     width: 100%;
     height: 60px;
     display: flex;
+    justify-content: space-between;
     padding: 0 2.6rem;
     box-sizing: border-box;
     font-size: 2.08rem;
