@@ -1,8 +1,7 @@
-import { ref, isRef, watch, computed, toRefs } from "vue";
+import { ref, isRef, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { getArticleDetail } from "@/service/api/article";
 import useMarkdownHtml from "@/hook/useMarkdownHtml";
-import { ArticleDetail } from "@/view/Article/type";
 import { ElMessage } from "element-plus";
 
 const useArticleDetail = () => {

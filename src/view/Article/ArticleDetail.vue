@@ -4,7 +4,6 @@ import useArticleDetail from '@/hook/useArticleDetail'
 import JDayjs from '@/utils/JDayjs';
 
 const { content, title, createAt, updateAt } = useArticleDetail()
-console.log(createAt.value);
 
 
 </script>

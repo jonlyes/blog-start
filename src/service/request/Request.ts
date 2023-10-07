@@ -1,7 +1,6 @@
 // ts封装axios load + msg
 import axios, {
   AxiosInstance,
-  AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
 import { ElMessage, ElLoading } from "element-plus";

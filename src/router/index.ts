@@ -32,6 +32,10 @@ const routes: RouteRecordRaw[] = [
     name: "NotFound",
     component: () => import("@/view/NotFound/NotFound.vue"),
   },
+  {
+    path: "/:pathMatch(.*)",
+    redirect: "/404",
+  },
 ];
 
 // 创建路由对象

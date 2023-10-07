@@ -8,7 +8,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ArticleGrid: typeof import('./src/components/Article/ArticleGrid.vue')['default']
-    Astral: typeof import('./src/components/Astral/Astral.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
@@ -23,8 +22,6 @@ declare module 'vue' {
     ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMain: typeof import('element-plus/es')['ElMain']
-    ElOption: typeof import('element-plus/es')['ElOption']
-    ElSelect: typeof import('element-plus/es')['ElSelect']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTimeline: typeof import('element-plus/es')['ElTimeline']
@@ -35,12 +32,10 @@ declare module 'vue' {
     PageFooter: typeof import('./src/components/PageFooter/PageFooter.vue')['default']
     PageHeader: typeof import('./src/components/PageHeader/PageHeader.vue')['default']
     PageMain: typeof import('./src/components/PageMain.vue/PageMain.vue')['default']
-    ProjectGrd: typeof import('./src/components/Project/ProjectGrd.vue')['default']
     ProjectGrid: typeof import('./src/components/Project/ProjectGrid.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SendMoment: typeof import('./src/components/Moment/SendMoment.vue')['default']
-    SendMomet: typeof import('./src/components/Moment/SendMomet.vue')['default']
   }
   export interface ComponentCustomProperties {
     vInfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
