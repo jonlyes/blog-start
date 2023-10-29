@@ -1,6 +1,7 @@
 import Request from "./request/Request";
 import { baseURL } from "./request/config";
-import { useAuthStore } from "@/store/useAuthStore";
+import useAuthStore from "@/store/useAuthStore";
+import { storeToRefs } from "pinia";
 
 export default new Request({
   baseURL,
@@ -8,10 +9,10 @@ export default new Request({
   interceptors: {
     requestInterceptor: (config) => {
       const authStore = useAuthStore();
+      const { authToken } = storeToRefs(authStore);
 
-      if (authStore.authToken !== "" && config.headers) {
-        config.headers["Authorization"] = `Bearer ${authStore.authToken}`;
-        config.headers["Content-Type"] = "application/json";
+      if (authToken.value !== "" && config.headers) {
+        config.headers["Authorization"] = `Bearer ${authToken.value}`;
       }
 
       return config;

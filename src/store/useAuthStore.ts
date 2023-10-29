@@ -6,12 +6,12 @@ import type { Action } from "element-plus";
 import { login } from "@/service/api/auth";
 import { LoginParams, LoginRes } from "@/service/api/auth/type";
 
-export const useAuthStore = defineStore(
+const useAuthStore = defineStore(
   "auth",
   () => {
-    const router = useRouter();
+    const router = useRouter();    
 
-    const authToken = shallowRef<string>("");
+    const authToken = shallowRef<string>('');
     const isLogin = computed(() => {
       return authToken.value !== "";
     });
@@ -53,7 +53,9 @@ export const useAuthStore = defineStore(
   {
     persist: {
       key: "authStore",
-      storage: sessionStorage,
+      storage: localStorage,
     },
   }
 );
+
+export default useAuthStore;

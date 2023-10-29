@@ -1,94 +1,103 @@
 <script setup lang="ts">
-import { shallowRef, watch, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import { ElScrollbar } from 'element-plus'
-import PageHeader from '@/components/PageHeader/PageHeader.vue'
-import PageFooter from '@/components/PageFooter/PageFooter.vue'
-import RemHandle from '@/utils/RemHandle'
-import { ScrollEvent } from './type'
+import { shallowRef, watch, ref } from "vue";
+import { useRoute } from "vue-router";
+import { ElScrollbar } from "element-plus";
+import PageHeader from "@/components/PageHeader/PageHeader.vue";
+import PageFooter from "@/components/PageFooter/PageFooter.vue";
+import RemHandle from "@/utils/RemHandle";
+import { ScrollEvent } from "./type";
 
-const route = useRoute()
-const remHandle = RemHandle.getInstance()
+const route = useRoute();
+const remHandle = RemHandle.getInstance();
 
 // 404页面
-const isNotFound = shallowRef<boolean>(false)
+const isNotFound = shallowRef<boolean>(false);
+
+// 头部底部
+const isOppositeSide = shallowRef<boolean>(true);
 
 // 导航箭头
-const isShow = shallowRef<boolean>(false)
+const isShow = shallowRef<boolean>(false);
 
 // 箭头锁(大于800直接不显示箭头并锁住不允许被操作)
-const arrowLock = shallowRef<boolean>(true)
+const arrowLock = shallowRef<boolean>(true);
 
 // 滚动条实例
-const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
+const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
+
+// 页面锁（由于在mdEdit页面刷新会短暂出现header跟footer，目前解决方法是给页面加锁）
+const showPage = shallowRef<boolean>(false);
 
 // 监视路由name
-watch(() => route.name, (val) => {
+watch(
+  () => route.name,
+  (val) => {
+    showPage.value = false;
+    if (!val) return;
+    isNotFound.value = val !== "NotFound";
 
-  isNotFound.value = val !== 'NotFound'
+    isOppositeSide.value =
+      !(String(val).indexOf("Update") !== -1 || String(val).indexOf("Create") !== -1) &&
+      isNotFound.value;
 
-  if (val === 'jonlyes') {
-    remHandle.addRemFn(resizeHandleFn, true)
-  } else {
-    setTimeout(() => {
-      remHandle.removeRemFn(resizeHandleFn)
-    }, 0);
-    isShow.value = false
-    arrowLock.value= false
-  }
-
-}, { immediate: true })
-
+    if (val === "jonlyes") {
+      remHandle.addRemFn(resizeHandleFn, true);
+    } else {
+      setTimeout(() => {
+        remHandle.removeRemFn(resizeHandleFn);
+      }, 0);
+      isShow.value = false;
+      arrowLock.value = false;
+    }
+    showPage.value = true;
+  },
+  { immediate: true }
+);
 
 // remHandle的回调
 const resizeHandleFn = (document: HTMLElement) => {
   if (document.clientHeight > 800) {
-    isShow.value = false
-    arrowLock.value = false
+    isShow.value = false;
+    arrowLock.value = false;
   } else {
-    isShow.value = true
-    arrowLock.value = true
+    isShow.value = true;
+    arrowLock.value = true;
   }
-}
-
+};
 
 // 滚动事件
 const scrollHandle = (event: ScrollEvent) => {
-  if (route.name !== 'jonlyes') return
+  if (route.name !== "jonlyes") return;
   if (!arrowLock.value) {
-    isShow.value = false
+    isShow.value = false;
   } else {
-    isShow.value = event.scrollTop > 200 ? false : true
+    isShow.value = event.scrollTop > 200 ? false : true;
   }
-
-}
+};
 
 // 设置滚动距离
 const scrollToHandle = () => {
-  scrollbarRef.value?.setScrollTop(600)
-}
-
-
-
+  scrollbarRef.value?.setScrollTop(600);
+};
 </script>
 <template>
-  <div class="layout">
+  <div class="layout" v-if="showPage">
     <el-scrollbar ref="scrollbarRef" height="100vh" @scroll="scrollHandle" :always="true">
       <div class="page">
         <el-container>
-          <el-header height="100px" v-if="isNotFound">
+          <el-header height="100px" v-if="isOppositeSide">
             <PageHeader />
           </el-header>
-          <el-main>
+          <el-main :class="{ editor: !isOppositeSide }">
             <router-view v-slot="{ Component }">
               <Transition name="blog">
                 <keep-alive include="blog">
-                  <component :is='Component' />
+                  <component :is="Component" />
                 </keep-alive>
               </Transition>
             </router-view>
           </el-main>
-          <el-footer v-if="isNotFound">
+          <el-footer v-if="isOppositeSide">
             <PageFooter />
           </el-footer>
           <div class="scroll-down" v-if="isShow">
@@ -102,7 +111,6 @@ const scrollToHandle = () => {
   </div>
 </template>
 
-
 <style lang="scss" scoped>
 .layout {
   background-color: rgb(222, 229, 231);
@@ -112,12 +120,11 @@ const scrollToHandle = () => {
   // background-repeat: repeat-y;
   // background-size:cover ;
 
-
   :deep(.el-scrollbar__bar) {
     z-index: 999 !important;
 
     div {
-      opacity: .8;
+      opacity: 0.8;
     }
   }
 
@@ -125,17 +132,27 @@ const scrollToHandle = () => {
     width: 100vw;
     min-width: 1000px;
   }
-  .el-header{
+
+  .el-header {
     // background-color: rgba(255,255,255,.7);
     // margin-bottom: 40px;
   }
 
-  .el-main {
+  :deep(.el-main) {
     overflow: hidden;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .editor {
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
+    background-color: #fff;
   }
 
-  .el-footer {
-    margin-top: 60px;
+  :deep(.el-footer) {
+    height: 50px;
   }
 
   .scroll-down {
@@ -153,9 +170,7 @@ const scrollToHandle = () => {
       font-size: 32px;
       cursor: pointer;
       animation: icon-shake 0.5s ease-in-out infinite alternate;
-
     }
-
   }
 }
 
@@ -176,7 +191,6 @@ const scrollToHandle = () => {
   opacity: 1;
   transform: translateY(0px);
   transition: all 0.8s ease;
-
 }
 
 .blog-enter-from {

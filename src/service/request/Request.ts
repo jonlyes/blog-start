@@ -1,8 +1,5 @@
 // ts封装axios load + msg
-import axios, {
-  AxiosInstance,
-  InternalAxiosRequestConfig,
-} from "axios";
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 import { ElMessage, ElLoading } from "element-plus";
 import { RequestAxiosConfig, RequestInterceptors } from "./type";
 
@@ -35,6 +32,7 @@ class Request {
     // 添加全局拦截器
     this.instance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
+        
         if (this.showLoading) {
           this.loadingInstance = ElLoading.service({
             lock: true,
@@ -115,4 +113,4 @@ class Request {
   }
 }
 
-export default Request;
+export default Request

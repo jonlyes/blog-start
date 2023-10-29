@@ -1,18 +1,18 @@
-import { ref, isRef, watch, computed } from "vue";
-import { useRoute } from "vue-router";
+import { ref, watch, computed, nextTick } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { getArticleDetail } from "@/service/api/article";
-import useMarkdownHtml from "@/hook/useMarkdownHtml";
 import { ElMessage } from "element-plus";
+import { GetArticleInfoRes } from "@/service/api/article/type";
 
 const useArticleDetail = () => {
   const route = useRoute();
+  const router = useRouter();
 
   const articleItem = {
     id: ref<number>(0),
     title: ref<string>(""),
     content: ref<string>(""),
     cover: ref<string>(""),
-    imgList: ref<string[]>([]),
     type: ref<"public" | "private">("public"),
     createAt: ref<string>(),
     updateAt: ref<string>(),
@@ -25,26 +25,23 @@ const useArticleDetail = () => {
   watch(
     id,
     async (newId) => {
+      if (!newId || isNaN(newId)) return;
       try {
-        const item = (await getArticleDetail(newId)).data;
-
+        const item = (await getArticleDetail(newId)).data as GetArticleInfoRes;
         articleItem.id.value = item.id;
         articleItem.title.value = item.title;
-
-        const contentValue = useMarkdownHtml(item.content);
-        isRef(contentValue)
-          ? (articleItem.content.value = contentValue.value as string)
-          : (articleItem.content.value = contentValue as string);
-
+        articleItem.content.value = item.content;
         articleItem.cover.value = item.cover;
-        articleItem.imgList.value = item.imgList;
         articleItem.type.value = item.type;
         articleItem.createAt.value = item.createAt;
         articleItem.updateAt.value = item.updateAt;
       } catch (error) {
         ElMessage.error({
-          message: "请求失败",
+          message: "该资源不存在",
         });
+        console.log(11);
+
+        router.push("/article");
       }
     },
     { immediate: true }

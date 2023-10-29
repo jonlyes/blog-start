@@ -4,7 +4,7 @@ import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
 import { storeToRefs } from 'pinia'
 import { TabItem } from './type';
 import avatar from '@/assets/avatar.jpg'
-import { useAuthStore } from '@/store/useAuthStore';
+import useAuthStore from '@/store/useAuthStore';
 import Login from '@/components/Login/Login.vue'
 
 const route: RouteLocationNormalizedLoaded = useRoute()
@@ -76,7 +76,7 @@ const showTabList = computed(() => {
     align-items: center;
     padding: 0 40px;
     box-sizing: border-box;
-    border-bottom: 1px solid rgba(66, 66, 66,);
+    border-bottom: 1px solid rgba(66, 66, 66, );
 
     .tab-left {
         width: 80px;

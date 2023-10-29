@@ -7,8 +7,8 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import { createPinia } from "pinia"; //store状态库
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import RemHandle from "@/utils/RemHandle"; // rem自适应
-import "github-markdown-css"
-import "@/global/index.scss"
+import "github-markdown-css";
+import "@/global/index.scss";
 
 const app = createApp(App);
 const pinia = createPinia();

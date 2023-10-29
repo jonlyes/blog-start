@@ -10,8 +10,19 @@ export interface GetArticleInfoRes {
   title: string;
   content: string;
   cover: string;
-  imgList: string[];
   type: ArticleType;
   createAt: string;
   updateAt: string;
+}
+
+export interface updateArticleData {
+  title: string;
+  content: string;
+  type: ArticleType;
+}
+
+export interface createArticleDate {
+  title: string;
+  content: string;
+  type: ArticleType;
 }

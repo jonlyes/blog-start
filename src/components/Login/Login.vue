@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useAuthStore } from '@/store/useAuthStore';
+import  useAuthStore  from '@/store/useAuthStore';
 import { LoginInfo } from './type'
 import { FormInstance, FormRules } from 'element-plus'
 

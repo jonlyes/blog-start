@@ -1,7 +1,7 @@
 {
   "name": "jonlyesblog",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,6 +17,7 @@
     "highlight.js": "^11.8.0",
     "marked": "^8.0.1",
     "marked-highlight": "^2.0.5",
+    "md-editor-v3": "^4.8.1",
     "pinia": "^2.1.6",
     "pinia-plugin-persistedstate": "^3.2.0",
     "vue": "^3.2.47",

@@ -6,6 +6,7 @@ switch (process.env.NODE_ENV) {
     break;
   case "production":
     baseURL = "http://8.134.109.167:8030";
+
     break;
 }
 
