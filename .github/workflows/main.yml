@@ -1,0 +1,21 @@
+name: start-automate-deploy
+
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+
+    steps:
+      - name: 🔥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🔥 Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: ☄️ Install Dependencies
+        run: echo yarn --version
