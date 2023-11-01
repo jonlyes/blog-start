@@ -1,4 +1,4 @@
-import { ref, watch, computed, nextTick } from "vue";
+import { ref, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getArticleDetail } from "@/service/api/article";
 import { ElMessage } from "element-plus";
