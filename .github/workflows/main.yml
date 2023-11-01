@@ -9,13 +9,27 @@ jobs:
         node-version: [ 18.x ]
 
     steps:
-      - name: 🔥 Checkout Code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: 🔥 Setup Node ${{ matrix.node-version }}
+      - name: Setup Node ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: ☄️ Install Dependencies
-        run: echo yarn --version
+      - name: install
+        run: yarn install
+
+      - name: build
+        run: yarn run build
+
+      - name: server
+        uses: easingthemes/ssh-deploy@v4
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          TARGET: ${{ secrets.SSH_TARGET }}
+          EXCLUDE: "/dist/, /node_modules/"
