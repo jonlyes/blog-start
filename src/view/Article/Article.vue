@@ -4,8 +4,8 @@ import useListData from "@/hook/useListData";
 import { getArticleList } from "@/service/api/article";
 import { GetArticleInfoRes } from "@/service/api/article/type";
 import Finish from "@/components/Finish/Finish.vue";
-import { useRouter } from 'vue-router';
-const router = useRouter()
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const { listData, isDisabled, load, listCounts } = useListData<
   Omit<Omit<GetArticleInfoRes, "content">, "imgList">
@@ -16,21 +16,17 @@ const { listData, isDisabled, load, listCounts } = useListData<
 });
 
 // 发布文章
-const createArticleFn = ()=>{
+const createArticleFn = () => {
   const routerDate = router.resolve(`/article/create`);
   window.open(routerDate.path, "_blank");
-
-}
-
+};
 </script>
 <template>
   <div class="article">
     <header class="header-box">
       <div>博客文章</div>
       <div>
-        <el-button type="primary" round @click="createArticleFn"
-          >发布文章</el-button
-        >
+        <el-button type="primary" round @click="createArticleFn">发布文章</el-button>
       </div>
     </header>
     <article
