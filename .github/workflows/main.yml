@@ -33,4 +33,4 @@ jobs:
           REMOTE_HOST: ${{ secrets.SSH_HOST }} # 服务器地址（公网IP）
           REMOTE_USER: ${{ secrets.SSH_USER }} # 服务器用户名
           TARGET: ${{ secrets.SSH_TARGET }} # 源文件目录要传输到服务器的目标地址
-          EXCLUDE: " /node_modules/" # 忽略的文件夹
+          EXCLUDE: "/dist/ /node_modules/" # 忽略的文件夹
