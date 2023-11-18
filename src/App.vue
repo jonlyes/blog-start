@@ -28,7 +28,7 @@ const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
 // 页面锁（由于在mdEdit页面刷新会短暂出现header跟footer，目前解决方法是给页面加锁）
 const showPage = shallowRef<boolean>(false);
 
-// 监视路由name--
+// 监视路由name
 watch(
   () => route.name,
   (val) => {
