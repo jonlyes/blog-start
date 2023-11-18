@@ -2,7 +2,7 @@ name: start-automate-deploy
 
 on: [push]
 jobs:
-  deploy:  # 部署环境
+  deploy:  
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -16,21 +16,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn' # 我使用的yarn跑的项目，所以我会cache一下
+          cache: 'yarn' 
 
       - name: install
-        run: yarn install # intall依赖
+        run: yarn install 
 
       - name: build
-        run: yarn build # 打包项目
+        run: yarn build 
 
       - name: server
         uses: easingthemes/ssh-deploy@v4
         with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # ssh密钥
-          ARGS: "-rlgoDzvc -i --delete" # 参数
-          SOURCE: "dist/" # 源目录
-          REMOTE_HOST: ${{ secrets.SSH_HOST }} # 服务器地址（公网IP）
-          REMOTE_USER: ${{ secrets.SSH_USER }} # 服务器用户名
-          TARGET: ${{ secrets.SSH_TARGET }} # 源文件目录要传输到服务器的目标地址
-          EXCLUDE: "/dist/ /node_modules/" # 忽略的文件夹
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} 
+          ARGS: "-rlgoDzvc -i --delete" 
+          SOURCE: "dist/" 
+          REMOTE_HOST: ${{ secrets.SSH_HOST }} 
+          REMOTE_USER: ${{ secrets.SSH_USER }} 
+          TARGET: ${{ secrets.SSH_TARGET }} 
+          EXCLUDE: "/dist/ /node_modules/" 
